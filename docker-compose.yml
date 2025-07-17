@@ -1,0 +1,77 @@
+version: "3.8"
+
+services:
+    php:
+        container_name: php
+        user: ${MY_USER_ID}:${MY_GROUP_ID}
+        build: 
+            context: ./docker/php
+            dockerfile: Dockerfile
+            args:
+              - SSMTP_ROOT=${SSMTP_ROOT}
+              - SSMTP_MAILHUB=${SSMTP_MAILHUB}
+              - SSMTP_AUTH_USER=${SSMTP_AUTH_USER}
+              - SSMTP_AUTH_PASS=${SSMTP_AUTH_PASS}
+              - SSMTP_AUTH_METHOD=${SSMTP_AUTH_METHOD}
+              - SSMTP_USE_TLS=${SSMTP_USE_TLS}
+              - SSMTP_USE_STARTTLS=${SSMTP_USE_STARTTLS}
+              - SSMTP_HOSTNAME=${SSMTP_HOSTNAME}
+              - SSMTP_FROM_LINE_OVERRIDE=${SSMTP_FROM_LINE_OVERRIDE}
+              - MY_USER_ID=${MY_USER_ID}
+              - MY_GROUP_ID=${MY_GROUP_ID}
+        volumes:
+            - ./src:/var/www/html
+        networks:
+            - camagru-network
+        depends_on:
+            - mysql
+            - phpmyadmin
+        env_file: .env
+        ports:
+            - "8000:80"
+            #- "443:443"
+        restart: on-failure
+
+    mysql:
+        image: mysql:8.4.0
+        container_name: mysql
+        user: ${MY_USER_ID}:${MY_GROUP_ID}
+        volumes:
+            - mysql_volume:/var/lib/mysql
+            - ./docker/mysql/init:/docker-entrypoint-initdb.d
+        networks:
+            - camagru-network
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+        restart: on-failure
+        expose:
+            - "3306"
+
+    phpmyadmin:
+        image: phpmyadmin:5.2.1
+        container_name: phpmyadmin
+        env_file: .env
+        volumes:
+            - mysql_volume:/var/lib/mysql
+        networks:
+            - camagru-network
+        ports:
+            - 8001:80
+        depends_on:
+            - mysql
+        restart: on-failure
+
+volumes:
+    mysql_volume:
+        driver: local
+        driver_opts:
+            type: 'none'
+            o: 'bind'
+            device: '${MYSQL_VOLUME_PATH}'
+
+networks:
+    camagru-network:
+        driver: bridge
