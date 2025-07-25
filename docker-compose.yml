@@ -3,10 +3,9 @@ version: "3.8"
 services:
     php:
         container_name: php
-        user: ${MY_USER_ID}:${MY_GROUP_ID}
         build: 
-            context: ./docker/php
-            dockerfile: Dockerfile
+            context: .
+            dockerfile: ./docker/php/Dockerfile
             args:
               - SSMTP_ROOT=${SSMTP_ROOT}
               - SSMTP_MAILHUB=${SSMTP_MAILHUB}
@@ -17,10 +16,6 @@ services:
               - SSMTP_USE_STARTTLS=${SSMTP_USE_STARTTLS}
               - SSMTP_HOSTNAME=${SSMTP_HOSTNAME}
               - SSMTP_FROM_LINE_OVERRIDE=${SSMTP_FROM_LINE_OVERRIDE}
-              - MY_USER_ID=${MY_USER_ID}
-              - MY_GROUP_ID=${MY_GROUP_ID}
-        volumes:
-            - ./src:/var/www/html
         networks:
             - camagru-network
         depends_on:
@@ -28,17 +23,17 @@ services:
             - phpmyadmin
         env_file: .env
         ports:
-            - "8000:80"
-            #- "443:443"
+            - "8001:80"
         restart: on-failure
 
     mysql:
         image: mysql:8.4.0
         container_name: mysql
-        user: ${MY_USER_ID}:${MY_GROUP_ID}
+        build: 
+            context: .
+            dockerfile: ./docker/mysql/Dockerfile
         volumes:
             - mysql_volume:/var/lib/mysql
-            - ./docker/mysql/init:/docker-entrypoint-initdb.d
         networks:
             - camagru-network
         environment:
@@ -59,18 +54,13 @@ services:
         networks:
             - camagru-network
         ports:
-            - 8001:80
+            - 8002:80
         depends_on:
             - mysql
         restart: on-failure
 
 volumes:
     mysql_volume:
-        driver: local
-        driver_opts:
-            type: 'none'
-            o: 'bind'
-            device: '${MYSQL_VOLUME_PATH}'
 
 networks:
     camagru-network:
