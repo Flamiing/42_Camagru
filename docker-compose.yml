@@ -34,7 +34,6 @@ services:
             dockerfile: ./docker/mysql/Dockerfile
         volumes:
             - mysql_volume:/var/lib/mysql
-            - ./docker/mysql/init:/docker-entrypoint-initdb.d
         networks:
             - camagru-network
         environment:
