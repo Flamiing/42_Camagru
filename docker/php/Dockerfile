@@ -38,7 +38,7 @@ COPY ./docker/php/conf/php.ini /usr/local/etc/php/conf.d/php.ini
 
 COPY ./docker/php/tools/setup.sh /usr/local/bin
 
-COPY ./src /app
+COPY ./src/ /var/www/html/
 
 RUN chmod +x /usr/local/bin/setup.sh
 
