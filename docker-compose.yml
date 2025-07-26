@@ -41,6 +41,9 @@ services:
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_DATABASE: ${MYSQL_DATABASE}
+            USER_ID_1: ${USER_ID_1} # only for portfolio demo
+            USER_ID_2: ${USER_ID_2} # only for portfolio demo
+            USER_ID_3: ${USER_ID_3} # only for portfolio demo
         restart: on-failure
         expose:
             - "3306"
