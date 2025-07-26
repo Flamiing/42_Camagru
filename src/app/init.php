@@ -11,6 +11,7 @@ define('NOTHING_TO_UPDATE', 'NOTHING_TO_UPDATE');
 define('MODULE', '1');
 define('NOT_MODULE', '0');
 define('SENDER_EMAIL_ADDRESS', getenv('SENDER_EMAIL_ADDRESS'));
+define('SENDER_NAME', getenv('SENDER_NAME'));
 
 // Error Global Variables
 define('ERROR_PAGE_NOT_FOUND', 'Page Not Found');
