@@ -1,7 +1,7 @@
 FROM mysql:8.4.0
 
 # Install gettext for envsubst command
-RUN apt-get update && apt-get install -y gettext-base && rm -rf /var/lib/apt/lists/*
+RUN microdnf update && microdnf install -y gettext && microdnf clean all
 
 COPY ./docker/mysql/init/init.sql /docker-entrypoint-initdb.d/init.sql
 
