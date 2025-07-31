@@ -232,7 +232,7 @@ class Account extends Controller {
 				Thank you,
 				Camagru Team.
 				MESSAGE;
-		$header = "From: " . SENDER_EMAIL_ADDRESS;
+		$header = 'From: "' . SENDER_NAME . '" <' . SENDER_EMAIL_ADDRESS . '>' . "\r\n";
 		mail($sendTo, $subject, $message, $header);
 	}
 
@@ -276,7 +276,7 @@ class Account extends Controller {
 				Thank you,
 				Camagru Team.
 				MESSAGE;
-		$header = "From: " . SENDER_EMAIL_ADDRESS;
+		$header = 'From: "' . SENDER_NAME . '" <' . SENDER_EMAIL_ADDRESS . '>' . "\r\n";
 		mail($sendTo, $subject, $message, $header);
 	}
 

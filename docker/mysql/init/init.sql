@@ -1,3 +1,6 @@
+-- Create the database if it doesn't exist:
+CREATE DATABASE IF NOT EXISTS camagru;
+
 -- Use camagru database:
 USE camagru;
 

@@ -14,12 +14,5 @@ return [
         'email' => 'test2@example.com',
         'password' => password_hash('Password1.', PASSWORD_DEFAULT),
 		'account_activated' => true
-    ],
-	[
-		'user_id' => 'Flamiing' . bin2hex(random_bytes(10)),
-        'username' => 'Flamiing',
-        'email' => 'amirlaaouam@gmail.com',
-        'password' => password_hash('Password1.', PASSWORD_DEFAULT),
-		'account_activated' => true
-    ],
+    ]
 ];
