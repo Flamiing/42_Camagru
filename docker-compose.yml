@@ -23,7 +23,7 @@ services:
             - phpmyadmin
         env_file: .env
         ports:
-            - "8001:80"
+            - "8001"
         restart: on-failure
 
     mysql:
@@ -57,14 +57,14 @@ services:
         networks:
             - camagru-network
         ports:
-            - 8002:80
+            - "8002"
         depends_on:
             - mysql
         restart: on-failure
 
 volumes:
     mysql_volume:
-
+      name: camagru_mysql_volume
 networks:
     camagru-network:
         driver: bridge
