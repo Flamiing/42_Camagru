@@ -27,7 +27,6 @@ services:
         restart: on-failure
 
     mysql:
-        image: mysql:8.4.0
         container_name: mysql
         build: 
             context: .
